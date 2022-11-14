@@ -11,7 +11,7 @@ class LoginView extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: Colors.blue[100],
       body: Container(
         margin: context.isPhone
             ? EdgeInsets.all(Get.width * 0.1)
@@ -31,7 +31,7 @@ class LoginView extends GetView<LoginController> {
                           topLeft: Radius.circular(50),
                           bottomLeft: Radius.circular(50),
                         ),
-                        color: Colors.grey,
+                        color: Colors.blue,
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(30.0),
@@ -86,21 +86,21 @@ class LoginView extends GetView<LoginController> {
                               Text(
                                 'Welcome',
                                 style: TextStyle(
-                                  color: Colors.grey,
+                                  color: Colors.blue,
                                   fontSize: 30,
                                 ),
                               ),
                               Text(
                                 'Please Sign In',
                                 style: TextStyle(
-                                  color: Colors.grey,
+                                  color: Colors.blue,
                                   fontSize: 20,
                                 ),
                               ),
                               Text(
                                 'Start Journey with Us',
                                 style: TextStyle(
-                                  color: Colors.grey,
+                                  color: Colors.blue,
                                   fontSize: 15,
                                 ),
                               ),

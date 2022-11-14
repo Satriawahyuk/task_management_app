@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:task_management_app/app/routes/app_pages.dart';
+import 'package:task_management_app/app/utils/style/AppColors.dart';
 
 class SideBar extends StatelessWidget {
   const SideBar({
@@ -15,7 +16,7 @@ class SideBar extends StatelessWidget {
       elevation: 0,
       child: Container(
         height: Get.height,
-        color: Colors.grey[100],
+        color: AppColors.primaryBg,
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -52,7 +53,7 @@ class SideBar extends StatelessWidget {
                             Get.currentRoute == '/home'
                                 ? Ionicons.desktop
                                 : Ionicons.desktop_outline,
-                            color: Colors.black,
+                            color: AppColors.primaryText,
                             size: 30,
                           ),
                         ),
@@ -62,7 +63,7 @@ class SideBar extends StatelessWidget {
                         const Text(
                           'Home',
                           style: TextStyle(
-                            color: Colors.black,
+                            color: AppColors.primaryText,
                             fontSize: 16,
                           ),
                         ),
@@ -91,7 +92,7 @@ class SideBar extends StatelessWidget {
                             Get.currentRoute == '/task'
                                 ? Ionicons.cube
                                 : Ionicons.cube_outline,
-                            color: Colors.black,
+                            color: AppColors.primaryText,
                             size: 30,
                           ),
                         ),
@@ -101,7 +102,7 @@ class SideBar extends StatelessWidget {
                         const Text(
                           'Task',
                           style: TextStyle(
-                            color: Colors.black,
+                            color: AppColors.primaryText,
                             fontSize: 16,
                           ),
                         ),
@@ -130,7 +131,7 @@ class SideBar extends StatelessWidget {
                             Get.currentRoute == '/friends'
                                 ? Ionicons.heart
                                 : Ionicons.heart_outline,
-                            color: Colors.black,
+                            color: AppColors.primaryText,
                             size: 30,
                           ),
                         ),
@@ -140,7 +141,7 @@ class SideBar extends StatelessWidget {
                         const Text(
                           'Friends',
                           style: TextStyle(
-                            color: Colors.black,
+                            color: AppColors.primaryText,
                             fontSize: 16,
                           ),
                         ),
@@ -169,7 +170,7 @@ class SideBar extends StatelessWidget {
                             Get.currentRoute == '/profile'
                                 ? Ionicons.person
                                 : Ionicons.person_outline,
-                            color: Colors.black,
+                            color: AppColors.primaryText,
                             size: 30,
                           ),
                         ),
@@ -179,7 +180,7 @@ class SideBar extends StatelessWidget {
                         const Text(
                           'Profile',
                           style: TextStyle(
-                            color: Colors.black,
+                            color: AppColors.primaryText,
                             fontSize: 16,
                           ),
                         ),
