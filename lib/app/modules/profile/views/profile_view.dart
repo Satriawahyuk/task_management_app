@@ -7,6 +7,8 @@ import 'package:task_management_app/app/routes/app_pages.dart';
 import 'package:task_management_app/app/utils/style/AppColors.dart';
 import 'package:task_management_app/app/utils/widget/header.dart';
 import 'package:task_management_app/app/utils/widget/sideBar.dart';
+import 'package:task_management_app/app/utils/widget/profileWidget.dart';
+import 'package:task_management_app/app/utils/widget/myTask.dart';
 
 import '../controllers/profile_controller.dart';
 
@@ -29,78 +31,109 @@ class ProfileView extends GetView<ProfileController> {
               : const SizedBox(),
           Expanded(
             flex: 15,
-            child: Column(
-              children: [
-                !context.isPhone
-                    ? const header()
-                    : Container(
-                        padding: const EdgeInsets.all(20),
-                        child: Row(
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                                _drawerKey.currentState!.openDrawer();
-                              },
-                              icon: const Icon(Icons.menu,
-                                  color: AppColors.primaryText),
-                            ),
-                            const SizedBox(
-                              width: 15,
-                            ),
-                            Column(
-                              // mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'Task Management',
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      color: AppColors.primaryText),
+            child: Column(children: [
+              !context.isPhone
+                  ? const header()
+                  : Container(
+                      padding: const EdgeInsets.all(20),
+                      child: Row(
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              _drawerKey.currentState!.openDrawer();
+                            },
+                            icon: const Icon(Icons.menu,
+                                color: AppColors.primaryText),
+                          ),
+                          const SizedBox(
+                            width: 15,
+                          ),
+                          Column(
+                            // mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Task Management',
+                                style: TextStyle(
+                                    fontSize: 20, color: AppColors.primaryText),
+                              ),
+                              const Text(
+                                'Manage task made easy with friends',
+                                style: TextStyle(
+                                    fontSize: 14, color: AppColors.primaryText),
+                              ),
+                            ],
+                          ),
+                          const Spacer(),
+                          GestureDetector(
+                            onTap: () {
+                              Get.defaultDialog(
+                                title: 'Sign Out',
+                                content: const Text(
+                                    'Are you sure want to Sign Out?'),
+                                cancel: ElevatedButton(
+                                  onPressed: () => Get.back(),
+                                  child: const Text('Cancel'),
                                 ),
-                                const Text(
-                                  'Manage task made easy with friends',
+                                confirm: ElevatedButton(
+                                  onPressed: () => Get.toNamed(Routes.LOGIN),
+                                  child: const Text('Sign Out'),
+                                ),
+                              );
+                            },
+                            child: Row(
+                              children: const [
+                                Text(
+                                  'Sign Out',
                                   style: TextStyle(
-                                      fontSize: 14,
-                                      color: AppColors.primaryText),
+                                      color: AppColors.primaryText,
+                                      fontSize: 15),
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Icon(
+                                  Ionicons.log_out_outline,
+                                  color: AppColors.primaryText,
+                                  size: 30,
                                 ),
                               ],
                             ),
-                            const Spacer(),
-                            const Icon(Ionicons.notifications,
-                                color: AppColors.primaryText, size: 30),
-                            const SizedBox(
-                              width: 15,
-                            ),
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(30),
-                              child: const CircleAvatar(
-                                backgroundColor: Colors.amber,
-                                radius: 25,
-                                foregroundImage: NetworkImage(
-                                    'https://static.independent.co.uk/s3fs-public/thumbnails/image/2017/09/27/08/jennifer-lawrence.jpg?quality=75&width982&height=726&auto=webp'),
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                //content / isi page / screen
-                Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.all(50),
-                    margin: !context.isPhone
-                        ? const EdgeInsets.all(10)
-                        : const EdgeInsets.all(0),
-                    decoration: BoxDecoration(
+                    ),
+              // content / isi page / screen
+              Expanded(
+                child: Container(
+                  padding: !context.isPhone
+                      ? EdgeInsets.all(50)
+                      : EdgeInsets.all(20),
+                  margin:
+                      !context.isPhone ? EdgeInsets.all(10) : EdgeInsets.all(0),
+                  decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: !context.isPhone
                           ? BorderRadius.circular(50)
-                          : BorderRadius.circular(30),
-                    ),
-                  ),
+                          : BorderRadius.circular(20)),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: const [
+                        ProfileWidget(),
+                        Text(
+                          'My Task',
+                          style: TextStyle(
+                            color: AppColors.primaryText,
+                            fontSize: 30,
+                          ),
+                        ),
+                        SizedBox(height: 169, child: MyTask()),
+                      ]),
                 ),
-              ],
-            ),
-          ),
+              )
+            ]),
+          )
         ],
       ),
     );

@@ -65,7 +65,7 @@ class HomeView extends GetView<HomeController> {
                                   Text(
                                     'Manage task made easy with friends',
                                     style: TextStyle(
-                                        fontSize: 14,
+                                        fontSize: 15,
                                         color: AppColors.primaryText),
                                   ),
                                 ],
@@ -101,7 +101,7 @@ class HomeView extends GetView<HomeController> {
                         color: Colors.white,
                         borderRadius: !context.isPhone
                             ? BorderRadius.circular(50)
-                            : BorderRadius.circular(30),
+                            : BorderRadius.circular(20),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
