@@ -13,7 +13,7 @@ class header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: Get.height * 0.1,
+      height: Get.height * 0.12,
       child: Padding(
         padding: const EdgeInsets.only(left: 40, right: 40, top: 25),
         child: Row(
@@ -25,11 +25,11 @@ class header extends StatelessWidget {
               children: [
                 Text(
                   'Task Management',
-                  style: TextStyle(fontSize: 30, color: AppColors.primaryText),
+                  style: TextStyle(fontSize: 25, color: AppColors.primaryText),
                 ),
                 Text(
                   'Manage task made easy with friends',
-                  style: TextStyle(fontSize: 16, color: AppColors.primaryText),
+                  style: TextStyle(fontSize: 15, color: AppColors.primaryText),
                 ),
               ],
             ),
@@ -49,7 +49,7 @@ class header extends StatelessWidget {
                     borderRadius: BorderRadius.circular(30),
                     borderSide: BorderSide(color: Colors.blue),
                   ),
-                  prefixIcon: Icon(Icons.search, color: Colors.black),
+                  prefixIcon: const Icon(Icons.search, color: Colors.black),
                   hintText: 'Search',
                 ),
               ),
@@ -57,7 +57,7 @@ class header extends StatelessWidget {
             const SizedBox(
               width: 20,
             ),
-            const Icon(Ionicons.notifications,
+            const Icon(Icons.notifications,
                 color: AppColors.primaryText, size: 30),
             const SizedBox(
               width: 20,
@@ -85,7 +85,7 @@ class header extends StatelessWidget {
                   SizedBox(
                     width: 5,
                   ),
-                  Icon(Ionicons.log_out_outline,
+                  Icon(Icons.logout_outlined,
                       color: AppColors.primaryText, size: 30),
                 ],
               ),

@@ -152,7 +152,7 @@ class FriendsView extends GetView<FriendsController> {
                                               ),
                                             ),
                                             child: Icon(
-                                              Ionicons.add_circle_outline,
+                                              Icons.add_circle_outline,
                                             )),
                                       ),
                                     ),

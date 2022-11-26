@@ -225,7 +225,7 @@ class TaskView extends GetView<TaskController> {
             );
           },
           label: Text('Add Task'),
-          icon: Icon(Ionicons.add),
+          icon: const Icon(Icons.add),
         ),
       ),
     );
