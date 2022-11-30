@@ -15,6 +15,7 @@ import '../controllers/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
   final authC = Get.find<AuthController>();
+  final GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
