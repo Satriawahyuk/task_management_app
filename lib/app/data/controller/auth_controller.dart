@@ -62,12 +62,12 @@ class AuthController extends GetxController {
         'lastLoginAt':
             _userCredential!.user!.metadata.lastSignInTime.toString(),
         // 'list_cari': [S, SA, SAT, SATR, SATRI, SATRIA]
-      }).then((value) {
+      }).then((value) async {
         String temp = '';
         try {
           for (var i = 0; i < googleUser.displayName!.length; i++) {
             temp = temp + googleUser.displayName![i];
-            users.doc(googleUser.email).set({
+            await users.doc(googleUser.email).set({
               'list_cari': FieldValue.arrayUnion([temp.toUpperCase()])
             }, SetOptions(merge: true));
           }
@@ -76,7 +76,7 @@ class AuthController extends GetxController {
         }
       });
     } else {
-      users.doc(googleUser.email).set({
+      users.doc(googleUser.email).update({
         'lastLoginAt':
             _userCredential!.user!.metadata.lastSignInTime.toString(),
       });
@@ -106,6 +106,7 @@ class AuthController extends GetxController {
       }
 
       if (ketaCari.isNotEmpty) {
+        hasilPencarian.value = [];
         ketaCari.forEach((element) {
           print(element);
           hasilPencarian.add(element);
