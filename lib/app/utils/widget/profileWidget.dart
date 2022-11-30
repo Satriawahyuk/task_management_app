@@ -77,7 +77,7 @@ class ProfileWidget extends StatelessWidget {
                           'Alicia Jasmine',
                           style: TextStyle(
                             color: AppColors.primaryText,
-                            fontSize: 30,
+                            fontSize: 25,
                           ),
                         ),
                         Text(

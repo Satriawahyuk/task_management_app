@@ -92,11 +92,8 @@ class ProfileView extends GetView<ProfileController> {
                                 SizedBox(
                                   width: 5,
                                 ),
-                                Icon(
-                                  Ionicons.log_out_outline,
-                                  color: AppColors.primaryText,
-                                  size: 30,
-                                ),
+                                Icon(Icons.logout_outlined,
+                                    color: AppColors.primaryText, size: 30),
                               ],
                             ),
                           ),
