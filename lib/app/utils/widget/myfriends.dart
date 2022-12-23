@@ -84,10 +84,12 @@ class MyFriends extends StatelessWidget {
                             return Column(
                               children: [
                                 ClipRRect(
-                                  borderRadius: BorderRadius.circular(100),
+                                  borderRadius: BorderRadius.circular(20),
                                   child: Image(
-                                    height: 100,
                                     image: NetworkImage(data!['photo']),
+                                    height: Get.width * 0.35,
+                                    width: Get.width * 0.4,
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
                                 Text(
