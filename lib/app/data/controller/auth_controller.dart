@@ -44,7 +44,7 @@ class AuthController extends GetxController {
 
     print(googleUser!.email);
     // Once signed in, return the UserCredential
-    await FirebaseAuth.instance
+    await auth
         .signInWithCredential(credential)
         .then((value) => _userCredential = value);
 
@@ -120,4 +120,44 @@ class AuthController extends GetxController {
     ketaCari.refresh();
     hasilPencarian.refresh();
   }
+
+  void addFriends(String _emailFriends) async {
+    CollectionReference friends = firestore.collection('friends');
+
+    final cekFriends = await friends.doc(auth.currentUser!.email).get();
+    // cek data ada atau tidak
+    if (cekFriends.data() == null) {
+      await friends.doc(auth.currentUser!.email).set({
+        'emailMe': auth.currentUser!.email,
+        'emailFriends': [_emailFriends],
+      }).whenComplete(
+          () => Get.snackbar("Friends", "Friends sucsessfuly added"));
+    } else {
+      await friends.doc(auth.currentUser!.email).set({
+        'emailFriends': FieldValue.arrayUnion([_emailFriends]),
+      }, SetOptions(merge: true)).whenComplete(
+          () => Get.snackbar("Friends", "Friends sucsessfuly added"));
+    }
+    ketaCari.clear();
+    hasilPencarian.clear();
+    searchFriendsController.clear();
+    Get.back();
+  }
+
+  Stream<DocumentSnapshot<Map<String, dynamic>>> streamFriends() {
+    return firestore
+        .collection('friends')
+        .doc(auth.currentUser!.email)
+        .snapshots();
+  }
+
+  Stream<DocumentSnapshot<Map<String, dynamic>>> streamUsers(String email) {
+    return firestore.collection('users').doc(email).snapshots();
+  }
+
+  // Future<QuerySnapshot<Map<String, dynamic>>> getPeople() async {
+  //   CollectionReference users = firestore.collection('users');
+
+  //   return;
+  // }
 }
