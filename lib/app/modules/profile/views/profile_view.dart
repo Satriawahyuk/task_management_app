@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:task_management_app/app/data/controller/auth_controller.dart';
 import 'package:task_management_app/app/routes/app_pages.dart';
 import 'package:task_management_app/app/utils/style/AppColors.dart';
+import 'package:task_management_app/app/utils/widget/PeopleYouMayKnow.dart';
 import 'package:task_management_app/app/utils/widget/header.dart';
-import 'package:task_management_app/app/utils/widget/sideBar.dart';
-import 'package:task_management_app/app/utils/widget/profileWidget.dart';
 import 'package:task_management_app/app/utils/widget/myTask.dart';
-import 'package:task_management_app/app/data/controller/auth_controller.dart';
+import 'package:task_management_app/app/utils/widget/profileW.dart';
+import 'package:task_management_app/app/utils/widget/sideBar.dart';
 
 import '../controllers/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
-  final authC = Get.find<AuthController>();
   final GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
+  final authConn = Get.find<AuthController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,8 +45,10 @@ class ProfileView extends GetView<ProfileController> {
                               onPressed: () {
                                 _drawerKey.currentState!.openDrawer();
                               },
-                              icon: const Icon(Icons.menu,
-                                  color: AppColors.primaryText),
+                              icon: const Icon(
+                                Icons.menu,
+                                color: AppColors.primaryText,
+                              ),
                             ),
                             const SizedBox(
                               width: 15,
@@ -54,14 +57,14 @@ class ProfileView extends GetView<ProfileController> {
                               // mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: const [
-                                const Text(
+                                Text(
                                   'Task Management',
                                   style: TextStyle(
                                       fontSize: 20,
                                       color: AppColors.primaryText),
                                 ),
-                                const Text(
-                                  'Manage task made easy with friends',
+                                Text(
+                                  'Manage task made easy',
                                   style: TextStyle(
                                       fontSize: 14,
                                       color: AppColors.primaryText),
@@ -74,13 +77,13 @@ class ProfileView extends GetView<ProfileController> {
                                 Get.defaultDialog(
                                   title: 'Sign Out',
                                   content: const Text(
-                                      'Are you sure want to Sign Out?'),
+                                      'Are you sure want to sign out?'),
                                   cancel: ElevatedButton(
                                     onPressed: () => Get.back(),
                                     child: const Text('Cancel'),
                                   ),
                                   confirm: ElevatedButton(
-                                    onPressed: () => Get.toNamed(Routes.LOGIN),
+                                    onPressed: () => authConn.logout(),
                                     child: const Text('Sign Out'),
                                   ),
                                 );
@@ -88,7 +91,7 @@ class ProfileView extends GetView<ProfileController> {
                               child: Row(
                                 children: const [
                                   Text(
-                                    'Sign Out',
+                                    "Sign Out",
                                     style: TextStyle(
                                         color: AppColors.primaryText,
                                         fontSize: 16),
@@ -96,8 +99,11 @@ class ProfileView extends GetView<ProfileController> {
                                   SizedBox(
                                     width: 5,
                                   ),
-                                  Icon(Icons.logout_outlined,
-                                      color: AppColors.primaryText, size: 30),
+                                  Icon(
+                                    Ionicons.log_out_outline,
+                                    color: AppColors.primaryText,
+                                    size: 30,
+                                  ),
                                 ],
                               ),
                             ),
@@ -108,33 +114,35 @@ class ProfileView extends GetView<ProfileController> {
                 Expanded(
                   child: Container(
                     padding: !context.isPhone
-                        ? EdgeInsets.all(50)
-                        : EdgeInsets.all(20),
+                        ? const EdgeInsets.all(50)
+                        : const EdgeInsets.all(20),
                     margin: !context.isPhone
-                        ? EdgeInsets.all(10)
-                        : EdgeInsets.all(0),
+                        ? const EdgeInsets.all(10)
+                        : const EdgeInsets.all(0),
                     decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: !context.isPhone
-                            ? BorderRadius.circular(50)
-                            : BorderRadius.circular(10)),
+                      color: Colors.white,
+                      borderRadius: !context.isPhone
+                          ? BorderRadius.circular(50)
+                          : BorderRadius.circular(10),
+                    ),
                     child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          ProfileWidget(),
-                          Text(
-                            'My Task',
-                            style: TextStyle(
-                              color: AppColors.primaryText,
-                              fontSize: 20,
-                            ),
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        profileW(),
+                        const Text(
+                          'People You May Know',
+                          style: TextStyle(
+                            color: AppColors.primaryText,
+                            fontSize: 20,
                           ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          SizedBox(height: 200, child: MyTask()),
-                        ]),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        SizedBox(height: 200, child: PeopleYouMayKnow()),
+                      ],
+                    ),
                   ),
                 )
               ]),

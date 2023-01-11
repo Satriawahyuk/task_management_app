@@ -1,20 +1,27 @@
+import 'package:ant_design_flutter/ant_design_flutter.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:task_management_app/app/routes/app_pages.dart';
-import 'package:ant_design_flutter/ant_design_flutter.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AuthController extends GetxController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
+  FirebaseAuth auth = FirebaseAuth.instance;
   UserCredential? _userCredential;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  late TextEditingController searchFriendsController;
+  late TextEditingController searchFriendsController,
+      titleController,
+      descriptionsController,
+      dueDateController;
 
   @override
   void onInit() {
     super.onInit();
     searchFriendsController = TextEditingController();
+    titleController = TextEditingController();
+    descriptionsController = TextEditingController();
+    dueDateController = TextEditingController();
   }
 
   @override
@@ -26,6 +33,9 @@ class AuthController extends GetxController {
   void onClose() {
     super.onClose();
     searchFriendsController.dispose();
+    titleController.dispose();
+    descriptionsController.dispose();
+    dueDateController.dispose();
   }
 
   Future<void> signInWithGoogle() async {
@@ -61,7 +71,7 @@ class AuthController extends GetxController {
         'createdAt': _userCredential!.user!.metadata.creationTime.toString(),
         'lastLoginAt':
             _userCredential!.user!.metadata.lastSignInTime.toString(),
-        // 'list_cari': [S, SA, SAT, SATR, SATRI, SATRIA]
+        // 'list_cari': [R,RI,RIZ,RIZK,RIZKY]
       }).then((value) async {
         String temp = '';
         try {
@@ -85,6 +95,7 @@ class AuthController extends GetxController {
   }
 
   Future logout() async {
+    await FirebaseAuth.instance.signOut();
     await GoogleSignIn().signOut();
     Get.offAllNamed(Routes.LOGIN);
   }
@@ -168,8 +179,78 @@ class AuthController extends GetxController {
 
     return hasil;
   }
-  
+
   Stream<DocumentSnapshot<Map<String, dynamic>>> streamTask(String taskId) {
     return firestore.collection('task').doc(taskId).snapshots();
+  }
+
+  void saveUpdateTask(
+    String titel,
+    String description,
+    String dueDate,
+    String docId,
+    String type,
+  ) async {
+    print(titel);
+    print(description);
+    print(dueDate);
+    print(docId);
+    print(type);
+    final isValid = formKey.currentState!.validate();
+    if (!isValid) {
+      return;
+    }
+    formKey.currentState!.save();
+    CollectionReference taskColl = firestore.collection('task');
+    CollectionReference usersColl = firestore.collection('users');
+    var taskId = DateTime.now().toIso8601String();
+    if (type == 'Add') {
+      await taskColl.doc(taskId).set({
+        'title': titel,
+        'descriptions': description,
+        'due_date': dueDate,
+        'status': '0',
+        'total_task': '0',
+        'total_task_finished': '0',
+        'task_detail': [],
+        'asign_to': [auth.currentUser!.email],
+        'created_by': auth.currentUser!.email,
+      }).whenComplete(() async {
+        await usersColl.doc(auth.currentUser!.email).set({
+          'task_id': FieldValue.arrayUnion([taskId])
+        }, SetOptions(merge: true));
+        Get.back();
+        Get.snackbar('Task', 'Sucsessfuly $type');
+      }).catchError((error) {
+        Get.snackbar('Task', 'Error $type');
+      });
+    } else {
+      await taskColl.doc(docId).update({
+        'title': titel,
+        'descriptions': description,
+        'due_date': dueDate,
+      }).whenComplete(() async {
+        // await usersColl.doc(auth.currentUser!.email).set({
+        //   'task_id': FieldValue.arrayUnion([taskId])
+        // }, SetOptions(merge: true));
+        Get.back();
+        Get.snackbar('Task', 'Sucsessfuly $type');
+      }).catchError((error) {
+        Get.snackbar('Task', 'Error $type');
+      });
+    }
+  }
+
+  void deleteTask(String taskId) async {
+    CollectionReference taskColl = firestore.collection('task');
+    CollectionReference usersColl = firestore.collection('users');
+
+    await taskColl.doc(taskId).delete().whenComplete(() async {
+      await usersColl.doc(auth.currentUser!.email).set({
+        'task_id': FieldValue.arrayRemove([taskId])
+      }, SetOptions(merge: true));
+      Get.back();
+      Get.snackbar('Task', 'Sucsessfuly deleted');
+    });
   }
 }

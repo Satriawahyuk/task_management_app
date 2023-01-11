@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:get/get.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:task_management_app/app/routes/app_pages.dart';
-import 'package:task_management_app/app/utils/style/AppColors.dart';
-import 'package:task_management_app/app/utils/widget/header.dart';
-import 'package:task_management_app/app/utils/widget/sideBar.dart';
-import 'package:task_management_app/app/utils/widget/myTask.dart';
-import 'package:task_management_app/app/utils/widget/myfriends.dart';
-import 'package:task_management_app/app/utils/widget/upcomingtask.dart';
 import 'package:task_management_app/app/data/controller/auth_controller.dart';
+import 'package:task_management_app/app/utils/style/AppColors.dart';
+import 'package:task_management_app/app/utils/widget/PeopleYouMayKnow.dart';
+import 'package:task_management_app/app/utils/widget/header.dart';
+import 'package:task_management_app/app/utils/widget/myfriends.dart';
+import 'package:task_management_app/app/utils/widget/sideBar.dart';
 
 import '../controllers/friends_controller.dart';
 
@@ -67,7 +66,7 @@ class FriendsView extends GetView<FriendsController> {
                                           color: AppColors.primaryText),
                                     ),
                                     Text(
-                                      'Manage task made easy with friends',
+                                      'Manage task made easy',
                                       style: TextStyle(
                                           fontSize: 14,
                                           color: AppColors.primaryText),
@@ -76,7 +75,7 @@ class FriendsView extends GetView<FriendsController> {
                                 ),
                                 const Spacer(),
                                 const Icon(
-                                  Icons.notifications,
+                                  Iconsax.notification,
                                   color: AppColors.primaryText,
                                   size: 30,
                                 ),
@@ -85,11 +84,11 @@ class FriendsView extends GetView<FriendsController> {
                                 ),
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(30),
-                                  child: const CircleAvatar(
+                                  child: CircleAvatar(
                                     backgroundColor: Colors.amber,
                                     radius: 25,
                                     foregroundImage: NetworkImage(
-                                        'https://static.independent.co.uk/s3fs-public/thumbnails/image/2017/09/27/08/jennifer-lawrence.jpg?quality=75&width982&height=726&auto=webp'),
+                                        authCon.auth.currentUser!.photoURL!),
                                   ),
                                 ),
                               ],
@@ -128,12 +127,12 @@ class FriendsView extends GetView<FriendsController> {
                           ],
                         ),
                       ),
-                //content / isi page / screen
+                // content / isi page / screen
                 Expanded(
                   child: Container(
                     padding: !context.isPhone
-                        ? EdgeInsets.all(50)
-                        : EdgeInsets.all(20),
+                        ? const EdgeInsets.all(50)
+                        : const EdgeInsets.all(20),
                     margin: !context.isPhone
                         ? const EdgeInsets.all(10)
                         : const EdgeInsets.all(0),
@@ -176,7 +175,7 @@ class FriendsView extends GetView<FriendsController> {
                                     Text(authCon.hasilPencarian[index]['name']),
                                 subtitle: Text(
                                     authCon.hasilPencarian[index]['email']),
-                                trailing: Icon(Icons.add),
+                                trailing: Icon(Iconsax.add),
                               ),
                             ),
                     ),
