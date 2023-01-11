@@ -168,4 +168,8 @@ class AuthController extends GetxController {
 
     return hasil;
   }
+  
+  Stream<DocumentSnapshot<Map<String, dynamic>>> streamTask(String taskId) {
+    return firestore.collection('task').doc(taskId).snapshots();
+  }
 }
